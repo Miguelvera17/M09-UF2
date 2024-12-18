@@ -54,7 +54,7 @@ public class Futbolista extends Thread {
         System.out.println("--- Estadístiques ------");
 
         for (int i = 0; i < NUM_JUGADORS; i++) {
-            System.out.println(jugadors[i].getName() + " --> " + jugadors[i].getNgols() + " gols");
+            System.out.println(jugadors[i].getName() + "   \t--> " + jugadors[i].getNgols() + " gols");
         }
     }
 }
