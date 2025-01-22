@@ -18,11 +18,11 @@ public class Administracio {
             try {
                 treballador.join(); 
             } catch (InterruptedException e) {
-                System.err.println(treballador.getName() + " ha estat interromput durant el join.");
+                System.err.println(treballador.getName() + " terminado.");
             }
         }
         for (Treballador treballador : poblacio_activa) {
-            System.out.printf("%s -> edat: %d / total: %.2f%n", treballador.getName(), treballador.getEdat(), treballador.getCobrat());
+            System.out.printf("%s -> edad: %d / total: %.2f%n", treballador.getName(), treballador.getEdat(), treballador.getCobrat());
         }
     }
 
