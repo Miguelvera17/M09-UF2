@@ -7,19 +7,26 @@ public class Compte {
         this.saldo = 0.0f;
     }
 
-    public synchronized float getSaldo() {
+    public static  Compte getInstance() {
+        if (instancia == null) {
+            instancia = new Compte();
+        }
+        return instancia;
+    }
+
+    public  float getSaldo() {
         return saldo;
     }
 
-    public synchronized void setSaldo(float saldo) {
+    public  void setSaldo(float saldo) {
         this.saldo = saldo;
     }
 
-    public synchronized void ingresa(float quantitat) {
+    public  void ingresa(float quantitat) {
         this.saldo += quantitat;
     }
 
-    public synchronized void treu(float quantitat) {
+    public  void treu(float quantitat) {
         this.saldo -= quantitat;
     }
 }
