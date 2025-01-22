@@ -7,13 +7,6 @@ public class Compte {
         this.saldo = 0.0f;
     }
 
-    public static synchronized Compte getInstance() {
-        if (instancia == null) {
-            instancia = new Compte();
-        }
-        return instancia;
-    }
-
     public synchronized float getSaldo() {
         return saldo;
     }
