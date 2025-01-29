@@ -1,6 +1,6 @@
 # Gestor de Reserves d'Esdeveniments
 
-Aquest projecte implementa un sistema de gestió de reserves per a un esdeveniment amb places limitades, on assistents poden reservar i cancel·lar places de manera concurrent.
+Implementem un sistema de gestió de reserves per a un esdeveniment amb places limitades, on assistents poden reservar i cancel·lar places de manera concurrent.
 
 ## Estructura del Codi
 
