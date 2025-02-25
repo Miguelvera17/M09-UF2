@@ -1,36 +1,39 @@
 public class Taula {
-    private final Filosof[] clients;
+    
+    private final Filosof[] filosofs; 
     private final Forquilla[] forquilles;
 
-    public static void main(String[] args) {
-        Taula taula = new Taula(5);
-        taula.show();
-        taula.call();
+    public Taula(int quantity) {
+        filosofs = new Filosof[quantity];
+        forquilles = new Forquilla[quantity];
+
+        for (int i = 0; i < quantity; i++) {
+            forquilles[i] = new Forquilla(i);
+        }
+
+        for (int i = 0; i < quantity; i++) {
+            filosofs[i] = new Filosof(i, forquilles[i], forquilles[(i + 1) % quantity]);
+        }
     }
 
-    public void show() {
-        for (int i = 0; i < clients.length; i++) {
-            System.out.println("Comensal: fil" + i + " esq:" + forquilles[i].getId() + " dret:" + forquilles[(i + 1) % forquilles.length].getId());
+    public static void main(String[] args) {
+        Taula table = new Taula(4); 
+        table.showTaula();
+        table.cridarATaula(); 
+    }
+
+    public void showTaula() {
+        for (int i = 0; i < filosofs.length; i++) {
+            System.out.println("Filosof " + i + " ForquillaEsq:" + forquilles[i].getId() + " Forquilladret:" + forquilles[(i + 1) % forquilles.length].getId());
         }
         System.out.println("------------------------------");
     }
 
-    public void call() {
-        for (Filosof f : clients) {
+    public void cridarATaula() {
+        for (Filosof f : filosofs) {
             f.start();
         }
     }
 
-    public Taula(int amount) {
-        clients = new Filosof[amount];
-        forquilles = new Forquilla[amount];
-        
-        for (int i = 0; i < amount; i++) {
-            forquilles[i] = new Forquilla(i);
-        }
-        
-        for (int i = 0; i < amount; i++) {
-            clients[i] = new Filosof(i, forquilles[i], forquilles[(i + 1) % amount]);
-        }
-    }
+    
 }
