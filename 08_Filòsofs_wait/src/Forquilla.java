@@ -22,17 +22,7 @@ public class Forquilla {
         this.propietari = propietari;
     }
 
-    public synchronized void agafar(int filosofId) throws InterruptedException {
-        while (propietari != LLIURE) {
-            wait();
-        }
-        propietari = filosofId;
-        System.out.println("Filòsof: fil" + filosofId + " agafa la forquilla " + id);
-    }
-
-    public synchronized void deixar(int filosofId) {
-        propietari = LLIURE;
-        notifyAll();
-        System.out.println("Filòsof: fil" + filosofId + " deixa la forquilla " + id);
+    public synchronized boolean estaLliure() {
+        return propietari == -1;
     }
 }

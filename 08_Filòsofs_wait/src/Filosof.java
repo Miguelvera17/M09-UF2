@@ -1,12 +1,12 @@
 import java.util.Random;
 
 public class Filosof extends Thread {
+    private final Random random = new Random();
     private final int id;
+    private int gana = 0;
     private final Forquilla forquillaEsquerra;
     private final Forquilla forquillaDreta;
-    private int gana = 0;
-    private final Random random = new Random();
-
+    
     public Filosof(int id, Forquilla forquillaEsquerra, Forquilla forquillaDreta) {
         this.id = id;
         this.forquillaEsquerra = forquillaEsquerra;
@@ -18,33 +18,37 @@ public class Filosof extends Thread {
         Thread.sleep(random.nextInt(1000) + 1000);
     }
 
-    private void agafarForquillaEsquerra() throws InterruptedException {
-        forquillaEsquerra.agafar(id);
+    private synchronized void agafarForquilla(Forquilla forquilla) throws InterruptedException {
+        while (!forquilla.estaLliure()) {
+            wait();
+        }
+        System.out.println("Filòsof: fil" + id + " agafa la forquilla " + forquilla.getId());
     }
 
-    private void agafarForquillaDreta() throws InterruptedException {
-        forquillaDreta.agafar(id);
-    }
-
-    private void deixarForquilles() {
-        forquillaEsquerra.deixar(id);
-        forquillaDreta.deixar(id);
+    private synchronized void deixarForquilla(Forquilla forquilla) {
+        System.out.println("Filòsof: fil" + id + " deixa la forquilla " + forquilla.getId());
+        notifyAll();
     }
 
     private boolean agafarForquilles() throws InterruptedException {
-        agafarForquillaEsquerra();
+        agafarForquilla(forquillaEsquerra);
         
-        if (forquillaDreta.getPropietari() != -1) {  
+        if (!forquillaDreta.estaLliure()) {  
             System.out.println("Filòsof: fil" + id + " deixa l'esquerra (" + forquillaEsquerra.getId() + ") i espera (dreta ocupada)");
-            forquillaEsquerra.deixar(id);
+            deixarForquilla(forquillaEsquerra);
             gana++;
             System.out.println("Filòsof: fil" + id + " gana=" + gana);
             Thread.sleep(random.nextInt(500) + 500);
             return false;
         }
 
-        agafarForquillaDreta();
+        agafarForquilla(forquillaDreta);
         return true;
+    }
+
+    private void deixarForquilles() {
+        deixarForquilla(forquillaEsquerra);
+        deixarForquilla(forquillaDreta);
     }
 
     private void menjar() throws InterruptedException {
