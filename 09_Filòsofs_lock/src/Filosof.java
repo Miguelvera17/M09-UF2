@@ -10,8 +10,8 @@ public class Filosof extends Thread {
 
     private final Forquilla forquillaEsquerra;
     private final Forquilla forquillaDreta;
-
     private Random random;
+
 
     public Filosof(String name, Forquilla forquillaEsquerra, Forquilla forquillaDreta) {
         this.name = name;
@@ -19,21 +19,6 @@ public class Filosof extends Thread {
         this.forquillaDreta = forquillaDreta;
         this.gana = 0;
         this.random = new Random();
-    }
-
-    public void agafarForquilles() {
-        forquillaEsquerra.agafar();
-        forquillaDreta.agafar();
-        System.out.println(
-            name + " té forquilles esq(" + forquillaEsquerra.getNum() + ") dreta(" + forquillaDreta.getNum() + ")");
-
-    }
-
-    public void deixarForquilles() {
-        forquillaDreta.deixar();
-        forquillaEsquerra.deixar();
-        System.out.println(name + " deixa les forquilles");
-
     }
 
     public void menjar() throws InterruptedException {
@@ -46,12 +31,39 @@ public class Filosof extends Thread {
         deixarForquilles();
     }
 
-    public void pensar() throws InterruptedException {
-        iniciGana = System.currentTimeMillis(); 
-        System.out.println(name + " està pensant");
-        Thread.sleep(1000 + random.nextInt(1000));
+    public void agafarForquilles() {
+        agafarForquillaEsquerra();
+        agafarForquillaDreta();
+        System.out.println(name + " té forquilles esq(" + forquillaEsquerra.getNum() + ") dreta(" + forquillaDreta.getNum() + ")");
     }
 
+    public void agafarForquillaEsquerra() {
+        forquillaEsquerra.agafar();
+    }
+
+    public void agafarForquillaDreta() {
+        forquillaDreta.agafar();
+    }
+
+    public void deixarForquilles() {
+        deixarForquillaDreta();
+        deixarForquillaEsquerra();
+        System.out.println(name + " deixa les forquilles");
+    }
+
+    public void deixarForquillaEsquerra() {
+        forquillaEsquerra.deixar();
+    }
+
+    public void deixarForquillaDreta() {
+        forquillaDreta.deixar();
+    }
+
+    public void pensar() throws InterruptedException {
+        iniciGana = System.currentTimeMillis();
+        System.out.println(name + " pensant");
+        Thread.sleep(1000 + random.nextInt(1000));
+    }
 
     public void calcularGana() {
         fiGana = System.currentTimeMillis();
