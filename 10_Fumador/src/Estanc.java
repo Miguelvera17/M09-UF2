@@ -1,9 +1,12 @@
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 public class Estanc {
-    private int tabac = 0;
-    private int paper = 0;
-    private int llumi = 0;
+    
+    private final List<String> tabac = new ArrayList<>();
+    private final List<String> paper = new ArrayList<>();
+    private final List<String> llumi = new ArrayList<>();
     private boolean tancat = false;
     private final Random random = new Random();
 
@@ -26,39 +29,39 @@ public class Estanc {
     }
 
     public synchronized void addTabac() {
-        tabac++;
+        tabac.add("Tabac");
         System.out.println("Afegint Tabac");
     }
 
     public synchronized void addPaper() {
-        paper++;
+        paper.add("Paper");
         System.out.println("Afegint Paper");
     }
 
     public synchronized void addLlumi() {
-        llumi++;
+        llumi.add("Llumí");
         System.out.println("Afegint Llumí");
     }
 
     public synchronized boolean venTabac() {
-        if (tabac > 0) {
-            tabac--;
+        if (!tabac.isEmpty()) {
+            tabac.remove(0);
             return true;
         }
         return false;
     }
 
     public synchronized boolean venPaper() {
-        if (paper > 0) {
-            paper--;
+        if (!paper.isEmpty()) {
+            paper.remove(0);
             return true;
         }
         return false;
     }
 
     public synchronized boolean venLlumi() {
-        if (llumi > 0) {
-            llumi--;
+        if (!llumi.isEmpty()) {
+            llumi.remove(0);
             return true;
         }
         return false;
@@ -74,7 +77,7 @@ public class Estanc {
         System.out.println("Estanc obert");
         while (!tancat) {
             try {
-                Thread.sleep(500 + random.nextInt(1000)); // Espera entre 0,5 y 1,5s
+                Thread.sleep(500 + random.nextInt(1000));
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }

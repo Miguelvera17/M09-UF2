@@ -1,8 +1,12 @@
 import java.util.Random;
 
 public class Fumador implements Runnable {
+    
     private final Estanc estanc;
     private final int id;
+    private boolean tieneTabac = false;
+    private boolean tienePaper = false;
+    private boolean tieneLlumi = false;
     private int fumades = 0;
     private final Random random = new Random();
 
@@ -20,7 +24,8 @@ public class Fumador implements Runnable {
                     e.printStackTrace();
                 }
             }
-            System.out.println("Fumador " + id + " comprant Tabac");
+            tieneTabac = true;
+            System.out.println("Fumador " + id + " ha comprat Tabac");
             estanc.notifyAll();
         }
     }
@@ -34,7 +39,8 @@ public class Fumador implements Runnable {
                     e.printStackTrace();
                 }
             }
-            System.out.println("Fumador " + id + " comprant Paper");
+            tienePaper = true;
+            System.out.println("Fumador " + id + " ha comprat Paper");
             estanc.notifyAll();
         }
     }
@@ -48,19 +54,25 @@ public class Fumador implements Runnable {
                     e.printStackTrace();
                 }
             }
-            System.out.println("Fumador " + id + " comprant Llumí");
+            tieneLlumi = true;
+            System.out.println("Fumador " + id + " ha comprat Llumí");
             estanc.notifyAll();
         }
     }
 
     private void fumar() {
-        try {
-            System.out.println("Fumador " + id + " fumant");
-            Thread.sleep(500 + random.nextInt(500)); // Fumar entre 0,5 y 1s
-            fumades++;
-            System.out.println("Fumador " + id + " ha fumat " + fumades + " vegades");
-        } catch (InterruptedException e) {
-            e.printStackTrace();
+        if (tieneTabac && tienePaper && tieneLlumi) {
+            try {
+                System.out.println("Fumador " + id + " està fumant");
+                Thread.sleep(500 + random.nextInt(500)); // Fumar entre 0,5 y 1s
+                fumades++;
+                System.out.println("Fumador " + id + " ha fumat " + fumades + " vegades");
+                tieneTabac = false;
+                tienePaper = false;
+                tieneLlumi = false;
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         }
     }
 
